@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Conversion Tool</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    h1 {
+      color: white;
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #003366;
+      font-size: 24px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    input, select, button {
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .result-box {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 20px;
+      background-color: #e0f0ff;
+      color: #003366;
+      font-weight: bold;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      background-color: #333;
+    }
+
+    .back-button:hover {
+      background-color: #000;
+    }
+  </style>
+  <script>
+    function convertTemp() {
+      let value = parseFloat(document.getElementById("tempInput").value);
+      let result = document.getElementById("tempResult");
+      let type = document.getElementById("tempType").value;
+      if (isNaN(value)) {
+        result.innerText = "Please enter a valid number.";
+        return;
+      }
+      if (type === "CtoF") result.innerText = (value * 9/5 + 32).toFixed(2) + " F";
+      else result.innerText = ((value - 32) * 5/9).toFixed(2) + " C";
+    }
+
+    function convertLength() {
+      let value = parseFloat(document.getElementById("lengthInput").value);
+      let result = document.getElementById("lengthResult");
+      let type = document.getElementById("lengthType").value;
+      if (isNaN(value)) {
+        result.innerText = "Please enter a valid number.";
+        return;
+      }
+      if (type === "MtoF") result.innerText = (value * 3.28084).toFixed(2) + " ft";
+      else result.innerText = (value / 3.28084).toFixed(2) + " m";
+    }
+
+    function clearFields() {
+      document.getElementById("tempInput").value = "";
+      document.getElementById("lengthInput").value = "";
+      document.getElementById("tempResult").innerText = "";
+      document.getElementById("lengthResult").innerText = "";
+    }
+  </script>
+</head>
+<body>
+  <h1>Conversion Tools</h1>
+
+  <div class="container">
+    <h2>Temperature Conversion</h2>
+    <input type="number" id="tempInput" placeholder="Enter temperature">
+    <select id="tempType">
+      <option value="CtoF">Celsius to Fahrenheit</option>
+      <option value="FtoC">Fahrenheit to Celsius</option>
+    </select>
+    <button onclick="convertTemp()">Convert</button>
+    <div id="tempResult" class="result-box"></div>
+
+    <h2>Length Conversion</h2>
+    <input type="number" id="lengthInput" placeholder="Enter length">
+    <select id="lengthType">
+      <option value="MtoF">Meters to Feet</option>
+      <option value="FtoM">Feet to Meters</option>
+    </select>
+    <button onclick="convertLength()">Convert</button>
+    <div id="lengthResult" class="result-box"></div>
+
+    <button onclick="clearFields()">Clear</button>
+    <button class="back-button" onclick="location.href='index.html'">Back to Homepage</button>
+  </div>
+</body>
+</html>
