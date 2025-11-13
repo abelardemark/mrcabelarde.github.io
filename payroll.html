@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payroll Program</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    h1 {
+      color: white;
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #003366;
+      font-size: 24px;
+      margin-top: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      text-align: left;
+      color: #003366;
+    }
+
+    input {
+      margin: 5px 0 15px;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .back-button {
+      background-color: #333;
+    }
+
+    .back-button:hover {
+      background-color: #000;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+      color: #003366;
+    }
+
+    thead {
+      background-color: #007BFF;
+    }
+
+    tfoot {
+      background-color: #e0f0ff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Payroll Program</h1>
+
+  <div class="container">
+    <h2>Employee Details</h2>
+    <label for="name">Employee Name:</label>
+    <input id="name" type="text" placeholder="Enter name">
+    <label for="days_worked">Days Worked:</label>
+    <input id="days_worked" type="number" placeholder="Enter days">
+    <label for="daily_rate">Daily Rate:</label>
+    <input id="daily_rate" type="number" placeholder="Enter rate">
+    <label for="deduct">Deduction Amount:</label>
+    <input id="deduct" type="number" placeholder="Enter deduction">
+
+    <button onclick="addEmployee()">Add Employee</button>
+    <button onclick="deleteEmployee()">Delete by No.</button>
+    <button onclick="clearInputs()">Clear</button>
+    <button class="back-button" onclick="location.href='index.html'">Back to Homepage</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Employee Name</th>
+          <th>Days Worked</th>
+          <th>Daily Rate</th>
+          <th>Gross Pay</th>
+          <th>Deduction</th>
+          <th>Net Pay</th>
+        </tr>
+      </thead>
+      <tbody id="payroll-body">
+        <tr>
+          <td>1</td>
+          <td>John Van Neumann</td>
+          <td>3</td>
+          <td>500.00</td>
+          <td>1500.00</td>
+          <td>300.00</td>
+          <td>1200.00</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Charles W. Babbage</td>
+          <td>4</td>
+          <td>500.00</td>
+          <td>2000.00</td>
+          <td>500.00</td>
+          <td>1500.00</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Total</td><td></td><td></td><td></td>
+          <td id="gross-total">3500.00</td>
+          <td id="deduct-total">800.00</td>
+          <td id="net-total">2700.00</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <script>
+    function getNumberValue(id) {
+      const value = parseFloat(document.getElementById(id).value);
+      return isNaN(value) ? 0 : value;
+    }
+
+    function updateTotals() {
+      const rows = document.getElementById('payroll-body').getElementsByTagName('tr');
+      let gross = 0, deduct = 0, net = 0;
+      for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        gross += parseFloat(cells[4].textContent) || 0;
+        deduct += parseFloat(cells[5].textContent) || 0;
+        net += parseFloat(cells[6].textContent) || 0;
+      }
+      document.getElementById('gross-total').textContent = gross.toFixed(2);
+      document.getElementById('deduct-total').textContent = deduct.toFixed(2);
+      document.getElementById('net-total').textContent = net.toFixed(2);
+    }
+
+    function addEmployee() {
+      const name = document.getElementById('name').value;
+      const days = getNumberValue('days_worked');
+      const rate = getNumberValue('daily_rate');
+      const deduct = getNumberValue('deduct');
+      const gross = days * rate;
+      const net = gross - deduct;
+
+      const table = document.getElementById('payroll-body');
+      const row = table.insertRow();
+      const no = table.rows.length;
+
+      const values = [no, name, days, rate.toFixed(2), gross.toFixed(2), deduct.toFixed(2), net.toFixed(2)];
+      for (let i = 0; i < values.length; i++) {
+        const cell = row.insertCell(i);
+        cell.textContent = values[i];
+      }
+      updateTotals();
+    }
+
+    function deleteEmployee() {
+      const no = parseInt(prompt("Enter the employee No. to delete:"), 10);
+      const table = document.getElementById('payroll-body');
+      if (no > 0 && no <= table.rows.length) {
+        table.deleteRow(no - 1);
+        for (let i = 0; i < table.rows.length; i++) {
+          table.rows[i].cells[0].textContent = i + 1;
+        }
+        updateTotals();
+      }
+    }
+
+    function clearInputs() {
+      document.getElementById('name').value = "";
+      document.getElementById('days_worked').value = "";
+      document.getElementById('daily_rate').value = "";
+      document.getElementById('deduct').value = "";
+    }
+
+    updateTotals();
+  </script>
+</body>
+</html>
