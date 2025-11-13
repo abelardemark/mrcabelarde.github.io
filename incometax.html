@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Income Tax Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    h1 {
+      color: white;
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #003366;
+      font-size: 24px;
+      margin-top: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    input, button {
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    p {
+      font-weight: bold;
+      margin-top: 10px;
+      color: #003366;
+    }
+
+    .result-box {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 20px;
+      background-color: #e0f0ff;
+      color: #003366;
+      font-weight: bold;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      background-color: #333;
+    }
+
+    .back-button:hover {
+      background-color: #000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Income Tax Calculator</h1>
+
+  <div class="container">
+    <h2>Enter Taxable Income</h2>
+    <input type="number" id="it" placeholder="Enter income amount">
+    <button onclick="computeIncomeTax()">Compute Income Tax</button>
+    <button onclick="clearTax()">Clear</button>
+    <p id="IT">Income Tax is:</p>
+    <input id="iT" class="result-box" type="text" readonly>
+
+    <button class="back-button" onclick="location.href='index.html'">Back to Homepage</button>
+  </div>
+
+  <script>
+    function computeIncomeTax() {
+      var tax_income, rate, income_tax;
+      tax_income = document.getElementById("it").value * 1;
+
+      if (tax_income > 8000000) {
+        rate = (tax_income - 8000000) * 0.35;
+        income_tax = 2410000 + rate;
+      } else if (tax_income > 2000000) {
+        rate = (tax_income - 2000000) * 0.32;
+        income_tax = 490000 + rate;
+      } else if (tax_income > 800000) {
+        rate = (tax_income - 800000) * 0.30;
+        income_tax = 130000 + rate;
+      } else if (tax_income > 400000) {
+        rate = (tax_income - 400000) * 0.25;
+        income_tax = 30000 + rate;
+      } else if (tax_income > 250000) {
+        rate = (tax_income - 250000) * 0.20;
+        income_tax = rate;
+      } else {
+        income_tax = 0;
+      }
+
+      document.getElementById("IT").innerHTML = "Income Tax is:";
+      document.getElementById("iT").value = income_tax.toFixed(2);
+    }
+
+    function clearTax() {
+      document.getElementById("it").value = "";
+      document.getElementById("iT").value = "";
+      document.getElementById("IT").innerHTML = "Income Tax is:";
+    }
+  </script>
+</body>
+</html>
