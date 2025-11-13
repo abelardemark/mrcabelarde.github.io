@@ -1,0 +1,133 @@
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>Factorial & Natural Numbers</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    h1 {
+      color: white;
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #003366;
+      font-size: 24px;
+      margin-top: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    input, button {
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .result-box {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 20px;
+      background-color: #e0f0ff;
+      color: #003366;
+      font-weight: bold;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      background-color: #333;
+    }
+
+    .back-button:hover {
+      background-color: #000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Factorial & Natural Numbers</h1>
+
+  <div class="container">
+    <h2>Factorial</h2>
+    <input type="number" id="n1" placeholder="Enter a number">
+    <button onclick="computeFactorial()">Compute Factorial</button>
+    <input id="factorial" class="result-box" type="text" readonly>
+
+    <h2>Sum of Natural Numbers</h2>
+    <input type="number" id="n2" placeholder="Enter a number">
+    <button onclick="computeSum()">Compute Sum</button>
+    <input id="sum" class="result-box" type="text" readonly>
+
+    <h2>Average of Natural Numbers</h2>
+    <input type="number" id="n3" placeholder="Enter a number">
+    <button onclick="computeAverage()">Compute Average</button>
+    <input id="average" class="result-box" type="text" readonly>
+
+    <button onclick="clearMath()">Clear</button>
+    <button class="back-button" onclick="location.href='index.html'">Back to Homepage</button>
+  </div>
+
+  <script>
+    function computeFactorial() {
+      let i = document.getElementById("n1").value * 1;
+      let result = 1;
+      while (i > 1) {
+        result = result * i;
+        i--;
+      }
+      document.getElementById("factorial").value = result;
+    }
+
+    function computeSum() {
+      let j = document.getElementById("n2").value * 1;
+      let result = 0;
+      let a = 1;
+      do {
+        result = result + a;
+        a++;
+      } while (a <= j);
+      document.getElementById("sum").value = result;
+    }
+
+    function computeAverage() {
+      let k = document.getElementById("n3").value * 1;
+      let result = 0;
+      for (let b = 0; b <= k; b++) {
+        result = result + b;
+      }
+      let aver = result / k;
+      document.getElementById("average").value = aver;
+    }
+
+    function clearMath() {
+      document.getElementById("n1").value = "";
+      document.getElementById("n2").value = "";
+      document.getElementById("n3").value = "";
+      document.getElementById("factorial").value = "";
+      document.getElementById("sum").value = "";
+      document.getElementById("average").value = "";
+    }
+  </script>
+</body>
+</html>
